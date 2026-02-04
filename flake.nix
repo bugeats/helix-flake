@@ -42,7 +42,10 @@
           default = pkgs.symlinkJoin {
             name = "bugeats-helix";
             paths = [ packages.helix-patched ];
-            buildInputs = [ pkgs.makeWrapper ];
+            buildInputs = [
+              pkgs.makeWrapper
+              pkgs.git
+            ];
             postBuild = ''
               wrapProgram $out/bin/hx \
                 --add-flags "--config ${packages.config}/config.toml" \
