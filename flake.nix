@@ -30,19 +30,31 @@
       rec {
         packages = {
           # Trying to read the theme toml from the nix store at runtime wasn't working,
-          # so here we clobber the source, which it turn embeds my theme as the default theme.
-          helix-patched = pkgs.helix.overrideAttrs (oldAttrs: {
-            postPatch = (oldAttrs.postPatch or "") + ''
-              echo "Replacing theme.toml with custom theme..."
-              cp ${packages.theme} theme.toml
-            '';
-          });
+          # so here we clobber the source, which in turn embeds my theme as the default theme.
+          helix-patched =
+            (pkgs.helix.override {
+              # Exclude grammars whose upstream repos have been deleted.
+              includeGrammarIf =
+                grammar:
+                !builtins.elem grammar.name [
+                  "bovex"
+                ];
+            }).overrideAttrs
+              (oldAttrs: {
+                postPatch = (oldAttrs.postPatch or "") + ''
+                  echo "Replacing theme.toml with custom theme..."
+                  cp ${packages.theme} theme.toml
+                '';
+              });
 
           # Default is a version of `hx` that has been extended with custom config and theme.
           default = pkgs.symlinkJoin {
             name = "bugeats-helix";
             paths = [ packages.helix-patched ];
-            buildInputs = [ pkgs.makeWrapper ];
+            buildInputs = [
+              pkgs.makeWrapper
+              pkgs.git
+            ];
             postBuild = ''
               wrapProgram $out/bin/hx \
                 --add-flags "--config ${packages.config}/config.toml" \
@@ -67,7 +79,6 @@
               echo '${builtins.toJSON { inherit language-server language; }}' | yj -jt > $out/languages.toml
             '');
 
-          # Generate the theme.toml content
           theme =
             let
               theme = import ./theme.nix {
@@ -90,7 +101,6 @@
           '';
         };
 
-        # `nix run` to launch directly
         apps.default = {
           type = "app";
           program = "${packages.default}/bin/hx";

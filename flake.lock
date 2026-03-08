@@ -36,11 +36,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1769480690,
-        "narHash": "sha256-qolF+B9jnKHO5k27F3mGf8jJLh7ytgmynIszS1dwLIM=",
+        "lastModified": 1772653894,
+        "narHash": "sha256-/8hQLVH3X7I6Rr62V2cL01NkLYh3YHJ6kZB2fY6IysE=",
         "owner": "helix-editor",
         "repo": "helix",
-        "rev": "fb9c9e075ebd1d42d300947f30f7f6ab9ad43c72",
+        "rev": "51ec572a27a8c1267afbc07e6c1583585c6363dc",
         "type": "github"
       },
       "original": {
@@ -67,12 +67,12 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1769318308,
-        "narHash": "sha256-Mjx6p96Pkefks3+aA+72lu1xVehb6mv2yTUUqmSet6Q=",
-        "rev": "1cd347bf3355fce6c64ab37d3967b4a2cb4b878c",
-        "revCount": 906484,
+        "lastModified": 1772822230,
+        "narHash": "sha256-yf3iYLGbGVlIthlQIk5/4/EQDZNNEmuqKZkQssMljuw=",
+        "rev": "71caefce12ba78d84fe618cf61644dce01cf3a96",
+        "revCount": 909025,
         "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2511.906484%2Brev-1cd347bf3355fce6c64ab37d3967b4a2cb4b878c/019bfb68-fb8e-7f55-bb2a-5bee98516c95/source.tar.gz"
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2511.909025%2Brev-71caefce12ba78d84fe618cf61644dce01cf3a96/019cc963-0eee-7029-b0d3-31798a845baa/source.tar.gz"
       },
       "original": {
         "type": "tarball",
