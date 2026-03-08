@@ -38,6 +38,7 @@
                 grammar:
                 !builtins.elem grammar.name [
                   "bovex"
+                  "cairo"
                 ];
             }).overrideAttrs
               (oldAttrs: {
