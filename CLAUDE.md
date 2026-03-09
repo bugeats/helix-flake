@@ -9,7 +9,7 @@ Nix flake wrapping [helix](https://github.com/helix-editor/helix) with custom co
 - **`helix-patched`** — `.override` for grammar filtering + `.overrideAttrs` to embed custom theme into source
 - **`default`** — `symlinkJoin` + `wrapProgram` to inject config flags
 - **`config`** — generates `config.toml` and `languages.toml` from Nix expressions (`settings.nix`, `language-servers.nix`, `languages.nix`)
-- **`theme`** — generates `theme.toml` from `theme.nix` + `colors.json`
+- **`theme`** — generates `theme.toml` from `theme.nix` + [`bugeats/colors`](https://github.com/bugeats/colors) flake (IFD)
 
 ## Known Issues
 
@@ -17,4 +17,4 @@ Helix's `grammars.nix` uses `builtins.fetchTree` at eval time for every tree-sit
 
 ## Current Focus
 
-Build is green after excluding the deleted `tree-sitter-bovex` grammar. No active task.
+Build is green. No active task.

@@ -5,10 +5,7 @@
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
     flake-utils.url = "github:numtide/flake-utils";
     helix.url = "github:helix-editor/helix";
-    colors = {
-      url = ./colors.json;
-      flake = false;
-    };
+    colors.url = "github:bugeats/colors";
   };
 
   outputs =
@@ -48,7 +45,6 @@
                 '';
               });
 
-          # Default is a version of `hx` that has been extended with custom config and theme.
           default = pkgs.symlinkJoin {
             name = "bugeats-helix";
             paths = [ packages.helix-patched ];
@@ -63,7 +59,6 @@
             '';
           };
 
-          # Generate config.toml with languages.toml next to it, the way helix expects.
           config =
             let
               settings = (import ./settings.nix { });
@@ -73,17 +68,16 @@
             (pkgs.runCommand "bugeats-helix-config" { nativeBuildInputs = [ pkgs.yj ]; } ''
               mkdir -p $out/themes
 
-              # Generate config.toml
               echo '${builtins.toJSON settings}' | yj -jt > $out/config.toml
-
-              # Generate languages.toml
               echo '${builtins.toJSON { inherit language-server language; }}' | yj -jt > $out/languages.toml
             '');
 
           theme =
             let
               theme = import ./theme.nix {
-                colors = (builtins.fromJSON (builtins.readFile inputs.colors.outPath)).colors.hex;
+                colors =
+                  (builtins.fromJSON (builtins.readFile "${inputs.colors.packages.${system}.json}/colors.json"))
+                  .colors.hex;
               };
             in
             pkgs.runCommand "theme-toml" { nativeBuildInputs = [ pkgs.yj ]; } ''

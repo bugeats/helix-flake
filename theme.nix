@@ -60,7 +60,6 @@ let
   };
 
 in
-with colors;
 {
 
   "info" = fgInfo;
@@ -72,7 +71,6 @@ with colors;
   "comment" = {
     fg = COLOR_COMMENT_FG;
   };
-  # "constant.builtin" = COLOR_KEYWORD_FG;
   "constant.builtin" = COLOR_NORMAL_FG;
   "constant.character.escape" = COLOR_NORMAL_FG_ALT;
   "constant" = COLOR_KEYWORD_FG;
@@ -180,7 +178,7 @@ with colors;
   "ui.background.separator" = {
     fg = COLOR_UI_LEVEL_2_FG;
     bg = COLOR_UI_LEVEL_1_BG;
-  }; # ???
+  };
   "ui.bufferline.active" = uiLevel1;
   "ui.bufferline" = uiLevel2;
   "ui.cursor" = {
@@ -251,14 +249,12 @@ with colors;
     fg = COLOR_UI_LEVEL_2_FG;
   };
 
-  # "ui.virtual.indent-guide" = uiLevel2;
   "ui.virtual.inlay-hint" = italic;
   "ui.virtual.jump-label" = {
     bg = COLOR_SELECTION_BG_ALT;
     fg = COLOR_ANSI_CYAN_LIGHT;
   }
   // bold;
-  # "ui.virtual.ruler" = uiLevel3;
   "ui.virtual.whitespace" = COLOR_VISIBLE_WHITESPACE_FG;
 
   "ui.window" = uiLevel2;
