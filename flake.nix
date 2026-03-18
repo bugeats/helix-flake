@@ -92,7 +92,12 @@
             pkgs.git # helix fetches tree-sitter stuff this way
           ];
           shellHook = ''
-            echo "Helix configured. Run 'hx' to start."
+            echo "Helix wrapped and configured with:"
+            echo ""
+            echo "    ${packages.config}"
+            echo ""
+            echo "Run 'hx' to start."
+            echo ""
           '';
         };
 

@@ -4,74 +4,69 @@ let
     tab-width = 2;
     unit = "  ";
   };
-  textCommon = {
-    soft-wrap = {
-      enable = true;
-      wrap-at-text-width = true;
-    };
-    text-width = 80;
-  };
-  jsCommon =
-    extension: extraProps:
+
+  text = (
+    name: attrs:
+    (
+      {
+        inherit name indent;
+        soft-wrap.enable = true;
+        soft-wrap.wrap-at-text-width = true;
+        text-width = 80;
+      }
+      // attrs
+    )
+  );
+
+  js = (
+    name: extension: attrs:
     {
+      inherit name indent;
       auto-format = true;
       comment-token = "//";
       language-servers = [ "vtsls" ];
       roots = [ ];
       scope = "source.${extension}";
       shebangs = [ ];
-      inherit indent;
     }
-    // extraProps;
+    // attrs
+  );
 in
 [
-  (
-    {
-      name = "text";
-      file-types = [
-        "txt"
-        "text"
-      ];
-      roots = [ ];
-      scope = "source.text";
-      language-servers = [ "typos" ];
-      inherit indent;
-    }
-    // textCommon
-  )
-  (
-    {
-      name = "markdown";
-      scope = "source.md";
-      injection-regex = "md|markdown";
-      file-types = [
-        "md"
-        "markdown"
-        "mkd"
-        "mkdn"
-        "mdwn"
-        "mdown"
-        "markdn"
-        "mdtxt"
-        "mdtext"
-        "workbook"
-      ];
-      roots = [ ".marksman.toml" ];
-      language-servers = [
-        "marksman"
-        "typos"
-      ];
-      indent = {
-        tab-width = 2;
-        unit = "  ";
-      };
-      block-comment-tokens = {
-        start = "<!--";
-        end = "-->";
-      };
-    }
-    // textCommon
-  )
+  (text "text" {
+    file-types = [
+      "txt"
+      "text"
+    ];
+    roots = [ ];
+    scope = "source.text";
+    language-servers = [ "typos" ];
+  })
+
+  (text "markdown" {
+    scope = "source.md";
+    injection-regex = "md|markdown";
+    file-types = [
+      "markdn"
+      "markdown"
+      "md"
+      "mdown"
+      "mdtext"
+      "mdtxt"
+      "mdwn"
+      "mkd"
+      "mkdn"
+      "workbook"
+    ];
+    roots = [ ".marksman.toml" ];
+    language-servers = [
+      "marksman"
+      "typos"
+    ];
+    block-comment-tokens.start = "<!--";
+    block-comment-tokens.end = "-->";
+  })
+
   {
     name = "conf";
     scope = "source.conf";
@@ -80,8 +75,8 @@ in
     comment-token = "#";
     inherit indent;
   }
-  (jsCommon "js" {
-    name = "javascript";
+
+  (js "javascript" "js" {
     file-types = [
       "js"
       "mjs"
@@ -91,15 +86,15 @@ in
     language-id = "javascript";
     shebangs = [ "node" ];
   })
-  (jsCommon "jsx" {
-    name = "jsx";
+
+  (js "jsx" "jsx" {
     file-types = [ "jsx" ];
     grammar = "javascript";
     injection-regex = "(jsx)";
     language-id = "javascriptreact";
   })
-  (jsCommon "ts" {
-    name = "typescript";
+
+  (js "typescript" "ts" {
     file-types = [
       "ts"
       "mts"
@@ -112,13 +107,14 @@ in
       ".eslintrc"
     ];
   })
-  (jsCommon "tsx" {
-    name = "tsx";
+
+  (js "tsx" "tsx" {
     file-types = [ "tsx" ];
     injection-regex = "(tsx)";
     language-id = "typescriptreact";
     roots = [ "tsconfig.json" ];
   })
+
   {
     name = "css";
     scope = "source.css";
