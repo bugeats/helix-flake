@@ -62,6 +62,10 @@
   keys = {
     normal = {
       "D" = "delete_selection_noyank";
+      "-" = [
+        ":set softwrap.enable true"
+        ":set softwrap.wrap-at-text-width true"
+      ];
     };
   };
 }
