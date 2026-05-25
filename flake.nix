@@ -54,7 +54,7 @@
             ];
             postBuild = ''
               wrapProgram $out/bin/hx \
-                --add-flags "--config ${packages.config}/config.toml" \
+                --set XDG_CONFIG_HOME ${packages.config} \
                 --set COLORTERM truecolor
             '';
           };
@@ -66,10 +66,10 @@
               language = import ./languages.nix { };
             in
             (pkgs.runCommand "bugeats-helix-config" { nativeBuildInputs = [ pkgs.yj ]; } ''
-              mkdir -p $out/themes
+              mkdir -p $out/helix
 
-              echo '${builtins.toJSON settings}' | yj -jt > $out/config.toml
-              echo '${builtins.toJSON { inherit language-server language; }}' | yj -jt > $out/languages.toml
+              echo '${builtins.toJSON settings}' | yj -jt > $out/helix/config.toml
+              echo '${builtins.toJSON { inherit language-server language; }}' | yj -jt > $out/helix/languages.toml
             '');
 
           theme =
