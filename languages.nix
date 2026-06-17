@@ -68,6 +68,65 @@ in
   })
 
   {
+    # Helix's default rust config, extended with tokn-lsp alongside
+    # rust-analyzer (the language-servers array replaces, so list both).
+    name = "rust";
+    scope = "source.rust";
+    injection-regex = "rs|rust";
+    file-types = [ "rs" ];
+    roots = [
+      "Cargo.toml"
+      "Cargo.lock"
+    ];
+    shebangs = [
+      "rust-script"
+      "cargo"
+    ];
+    auto-format = true;
+    comment-tokens = [
+      "//"
+      "///"
+      "//!"
+    ];
+    block-comment-tokens = [
+      {
+        start = "/*";
+        end = "*/";
+      }
+      {
+        start = "/**";
+        end = "*/";
+      }
+      {
+        start = "/*!";
+        end = "*/";
+      }
+    ];
+    language-servers = [
+      "rust-analyzer"
+      "tokn-lsp"
+    ];
+    indent = {
+      tab-width = 4;
+      unit = "    ";
+    };
+    persistent-diagnostic-sources = [
+      "rustc"
+      "clippy"
+    ];
+    auto-pairs = {
+      "(" = ")";
+      "{" = "}";
+      "[" = "]";
+      "\"" = "\"";
+      "`" = "`";
+    };
+    # Helix's default rust [language.debugger] (lldb-dap) is omitted: it is
+    # inherited from the built-in language on merge, and its gdbserver template
+    # uses a mixed table/string array that the yj TOML encoder cannot emit.
+  }
+
+  {
     name = "conf";
     scope = "source.conf";
     file-types = [ "conf" ];

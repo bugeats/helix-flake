@@ -1,6 +1,10 @@
 { pkgs, ... }:
 {
 
+  # Resolved from PATH at launch (e.g. the tokn-lsp dev shell). Bare command =
+  # the stdio shim, which relays to a `tokn-lsp daemon` running separately.
+  tokn-lsp.command = "tokn-lsp";
+
   rust-analyzer = {
     command = "rust-analyzer";
     config = {
