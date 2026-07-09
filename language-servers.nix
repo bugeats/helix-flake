@@ -136,6 +136,8 @@
 
   typos.command = "typos-lsp";
 
+  openscad-lsp.command = "${pkgs.openscad-lsp}/bin/openscad-lsp";
+
   deno = {
     command = "deno";
     args = [ "lsp" ];

@@ -19,4 +19,7 @@ Helix's `-c/--config` CLI flag only redirects `config.toml`; `languages.toml` is
 
 ## Current Focus
 
-Build is green. No active task.
+Build is green. Language servers use `pkgs.<name>` store paths where a
+nixpkgs package exists (see `openscad-lsp`, `vtsls`); helix's built-in
+language entries are inherited on merge, so `languages.nix` only overrides
+languages needing custom behavior. No active task.
