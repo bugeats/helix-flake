@@ -61,6 +61,8 @@
 
   keys = {
     normal = {
+      # git blame
+      "B" = ":sh git log -n 5 --format='format:%%h (%%an: %%ar) %%s' --no-patch -L%{cursor_line},+1:%{buffer_name}";
       "D" = "delete_selection_noyank";
       "-" = [
         ":set softwrap.enable true"

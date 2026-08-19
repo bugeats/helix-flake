@@ -23,6 +23,8 @@
             inputs.helix.overlays.default
           ];
         };
+
+        toml = pkgs.formats.toml { };
       in
       rec {
         packages = {
@@ -48,10 +50,7 @@
           default = pkgs.symlinkJoin {
             name = "bugeats-helix";
             paths = [ packages.helix-patched ];
-            buildInputs = [
-              pkgs.makeWrapper
-              pkgs.git
-            ];
+            nativeBuildInputs = [ pkgs.makeWrapper ];
             postBuild = ''
               wrapProgram $out/bin/hx \
                 --set XDG_CONFIG_HOME ${packages.config} \
@@ -59,30 +58,21 @@
             '';
           };
 
-          config =
-            let
-              settings = (import ./settings.nix { });
+          config = pkgs.linkFarm "bugeats-helix-config" {
+            "helix/config.toml" = toml.generate "config.toml" (import ./settings.nix { });
+            "helix/languages.toml" = toml.generate "languages.toml" {
               language-server = import ./language-servers.nix { inherit pkgs; };
               language = import ./languages.nix { };
-            in
-            (pkgs.runCommand "bugeats-helix-config" { nativeBuildInputs = [ pkgs.yj ]; } ''
-              mkdir -p $out/helix
+            };
+          };
 
-              echo '${builtins.toJSON settings}' | yj -jt > $out/helix/config.toml
-              echo '${builtins.toJSON { inherit language-server language; }}' | yj -jt > $out/helix/languages.toml
-            '');
-
-          theme =
-            let
-              theme = import ./theme.nix {
-                colors =
-                  (builtins.fromJSON (builtins.readFile "${inputs.colors.packages.${system}.json}/colors.json"))
-                  .colors.hex;
-              };
-            in
-            pkgs.runCommand "theme-toml" { nativeBuildInputs = [ pkgs.yj ]; } ''
-              echo '${builtins.toJSON theme}' | yj -jt > $out
-            '';
+          theme = toml.generate "theme.toml" (
+            import ./theme.nix {
+              colors =
+                (builtins.fromJSON (builtins.readFile "${inputs.colors.packages.${system}.json}/colors.json"))
+                .colors.hex;
+            }
+          );
 
         };
 

@@ -9,6 +9,8 @@ Nix flake wrapping [helix](https://github.com/helix-editor/helix) with custom co
 - **`helix-patched`** — `.override` for grammar filtering + `.overrideAttrs` to embed custom theme into source
 - **`default`** — `symlinkJoin` + `wrapProgram` pointing `XDG_CONFIG_HOME` at `packages.config` so helix loads both `config.toml` and `languages.toml` from the nix store
 - **`config`** — generates `helix/config.toml` and `helix/languages.toml` from Nix expressions (`settings.nix`, `language-servers.nix`, `languages.nix`); the `helix/` subdir matches helix's expected XDG layout
+
+All TOML is emitted via `pkgs.formats.toml`, which passes values as files — never inline JSON in shell strings, where quotes in config values break bash quoting.
 - **`theme`** — generates `theme.toml` from `theme.nix` + [`bugeats/colors`](https://github.com/bugeats/colors) flake (IFD)
 
 ## Known Issues
@@ -22,4 +24,6 @@ Helix's `-c/--config` CLI flag only redirects `config.toml`; `languages.toml` is
 Build is green. Language servers use `pkgs.<name>` store paths where a
 nixpkgs package exists (see `openscad-lsp`, `vtsls`); helix's built-in
 language entries are inherited on merge, so `languages.nix` only overrides
-languages needing custom behavior. No active task.
+languages needing custom behavior. `B` in normal mode runs an inline git
+blame via `:sh` — helix `%{...}` expansions, `%%` escapes literal `%`.
+No active task.
