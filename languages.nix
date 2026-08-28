@@ -40,7 +40,7 @@ in
     ];
     roots = [ ];
     scope = "source.text";
-    language-servers = [ "typos" ];
+    language-servers = [ "harper-ls" ];
   })
 
   (text "markdown" {
@@ -61,7 +61,7 @@ in
     roots = [ ".marksman.toml" ];
     language-servers = [
       "marksman"
-      "typos"
+      "harper-ls"
     ];
     block-comment-tokens.start = "<!--";
     block-comment-tokens.end = "-->";

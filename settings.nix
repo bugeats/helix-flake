@@ -61,7 +61,7 @@
 
   keys = {
     normal = {
-      # git blame
+      # `%%` reaches git as a literal `%`; helix reserves `%{...}` for its own expansions.
       "B" = ":sh git log -n 5 --format='format:%%h (%%an: %%ar) %%s' --no-patch -L%{cursor_line},+1:%{buffer_name}";
       "D" = "delete_selection_noyank";
       "-" = [

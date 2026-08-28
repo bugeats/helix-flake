@@ -134,7 +134,10 @@
     };
   };
 
-  typos.command = "typos-lsp";
+  harper-ls = {
+    command = "${pkgs.harper}/bin/harper-ls";
+    args = [ "--stdio" ];
+  };
 
   openscad-lsp.command = "${pkgs.openscad-lsp}/bin/openscad-lsp";
 

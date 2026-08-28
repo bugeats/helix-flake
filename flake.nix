@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
+    nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
     flake-utils.url = "github:numtide/flake-utils";
     helix.url = "github:helix-editor/helix";
     colors.url = "github:bugeats/colors";
@@ -21,6 +22,8 @@
           config.allowUnfree = true;
           overlays = [
             inputs.helix.overlays.default
+            # Stable lags too far behind for these.
+            (_: _: { inherit (inputs.nixpkgs-unstable.legacyPackages.${system}) harper; })
           ];
         };
 
